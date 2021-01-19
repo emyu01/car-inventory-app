@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cars;
 
 class CarsController extends Controller
 {
@@ -13,7 +14,7 @@ class CarsController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Cars::all(), 200);
     }
 
     /**
