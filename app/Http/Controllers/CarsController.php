@@ -35,7 +35,7 @@ class CarsController extends Controller
      */
     public function storeCar(Request $request)
     {
-        //
+        return Cars::create([$request]);
     }
 
     /**
