@@ -58,7 +58,8 @@ class CarsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $car = Cars::find($id);
+        return view('edit', compact(['car' => $car]));
     }
 
     /**
