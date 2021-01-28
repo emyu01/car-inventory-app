@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cars;
+use Illuminate\Support\Facades\DB;
 
 class CarsController extends Controller
 {
@@ -71,7 +72,14 @@ class CarsController extends Controller
      */
     public function editCar(Request $request, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            Cars::where('id', $id)->update($request);
+            DB::commit();
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'Error occured! Update not successful!']);
+        }
+        return response()->json(['status' => 'Update successful']);
     }
 
     /**
