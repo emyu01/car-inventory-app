@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cars;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class CarsController extends Controller
@@ -36,7 +37,7 @@ class CarsController extends Controller
      */
     public function storeCar(Request $request)
     {
-        return Cars::create([$request]);
+        return Cars::create($request->all());
     }
 
     /**
@@ -74,9 +75,9 @@ class CarsController extends Controller
     {
         try {
             DB::beginTransaction();
-            Cars::where('id', $id)->update($request);
+            Cars::where('id', $id)->update($request->all());
             DB::commit();
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return response()->json(['status' => 'Error occured! Update not successful!']);
         }
         return response()->json(['status' => 'Update successful']);
