@@ -91,6 +91,13 @@ class CarsController extends Controller
      */
     public function deleteCar($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            Cars::where('id', $id)->delete();
+            DB::commit();
+        } catch (Exception $e) {
+            return response()->json(['status' => 'Error occured! delete not successful!']);
+        }
+        return response()->json(['status' => 'Delete successful']);
     }
 }
